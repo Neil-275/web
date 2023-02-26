@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>First React app</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="app">Eyo</div>
+
+    <script type='text/babel'>
+
+        function ActiveFriendList(props){
+            return (
+                <ul>
+                    {props.list.map((name)=>(
+                        <li key={name}>
+                            <span>{name}</span>
+                            <button onClick={() => props.onRemoveFriend(name)}>
+                                Remove
+                            </button>
+                            <button onClick={()=> props.bad(name)}>
+                                Deactive
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            )
+        }   
+        function BadFriendList(props){
+            return(
+                <ul>
+                    {props.list.map((name)=>(
+                        <li key={name}>
+                            <span>{name}</span>    
+                            <button onClick={()=> props.bad(name)}>
+                                Active
+                            </button>
+                        </li>
+                ))}
+                </ul>
+            )
+        }
+        
+        class App extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state={
+                    friends: ['Jordan','Mike','Jack'],
+                    badFriends: [],
+                    input: '',
+                }
+                // console.log(this)
+                this.handleRemoveFriend = this.handleRemoveFriend.bind(this)
+                this.updateInput= this.updateInput.bind(this)
+                this.handleAddFriend= this.handleAddFriend.bind(this)
+                this.clearAll= this.clearAll.bind(this)
+                this.bad = this.bad.bind(this)///gán tất cả thằng this trong cái function bad này thành this đang đc gọi(App)
+                
+                console.log ('--constructor--')
+            }
+
+            componentDidMount() {
+                console.log('--componentDidMount--')
+            }
+
+            componentDidUpdate() {
+                console.log('--componentDidUpdate--')
+            }
+
+            componentWillUmount() {
+                console.log('--componentWillUnmount')
+            }
+
+            clearAll() {
+                this.setState((curr)=>{
+                    return{
+                        friends: [],
+                        input: "",
+                        badFriends:[],
+                    }
+                })
+            }
+            bad(name) {
+                if (this.state.friends.find((namee)=> namee===name)!== undefined){
+                    console.log(1)
+                    this.setState((curr)=>{
+                        return{
+                            ///gán hẳn 1 mảng, ko nên modify trên mảng cũ ~ có j mới thì thay đôi thành cái mới
+                            friends: curr.friends.filter( (namee)=>  namee!==name  ),
+                            /// concat :tạo một mảng mới có 
+                            badFriends: curr.badFriends.concat(name), 
+                        }
+                    })
+                }
+                else {
+                    this.setState((curr)=>{
+                        return{
+                            friends: curr.friends.concat(name),
+                            badFriends: curr.badFriends.filter((namee)=> namee!==name ),
+                        }
+                    })
+                }
+            }
+            handleAddFriend(){
+                this.setState((currentState)=>{
+                    if (this.state.input !=="")
+                        return {
+                            friends: currentState.friends.concat(currentState.input),
+                            input: "",
+                        }
+                })
+            }
+            updateInput(e){
+                const value=e.target.value
+                // console.log(this)
+                this.setState({
+                    input:value
+                })
+            }
+            handleRemoveFriend(name){
+                this.setState((currentState) => {
+                    return {
+                        friends: currentState.friends.filter((friends) => friends !== name)
+                    }
+                })
+            }
+
+            render() {
+                console.log('--render-- ')
+                return (
+                    <div>
+                        <input 
+                            type="text" 
+                            placeholder="Name"
+                            value={this.state.input}
+                            onChange={this.updateInput}
+                        />
+                        <button onClick={this.handleAddFriend}>Add</button>
+                        <br/>
+                        <button onClick={this.clearAll}>Clear all</button>
+                        <h3>Active Friends</h3>
+                        <ActiveFriendList 
+                            list={this.state.friends}
+                            onRemoveFriend={this.handleRemoveFriend}
+                            bad={this.bad}
+                        />
+                        <h3>Inactive Friends</h3>
+                        <BadFriendList
+                            list={this.state.badFriends}
+                            bad={this.bad}
+                        />
+                    </div>
+                )
+            }
+        } 
+
+        // function App(){
+        //     const friends=['Jordan','Mike','Jack']
+        //     return (
+        //         <div>
+        //             <FriendList list={friends}/>
+        //         </div>
+        //     )
+        
+        // }
+        ReactDOM.render(
+            <App/>,
+            document.getElementById('app')
+        )
+    </script>
+</body>
+</html>
