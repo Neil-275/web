@@ -7,7 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="text-gray-500">
+<body class="text-gray-500 font-body">
     <div>
         <div>
             <nav>
@@ -35,12 +35,18 @@
                 </ul>
             </nav>
         </div><!--end nav-->
-        <main class="px-16 py-6">
-            <div>
+        <main class="px-16 py-6 ">
+            <div class="flex justify-center md:justify-end">
                 <a href="#">Log in</a>
-                <a href="#">Sign up</a>
+                <a href="#" class="ml-10">Sign up</a>
             </div>
-            <header class="text-gray-700 text-xl ">
+            <!-- <div class="flex items-center">
+                <div class="bg-red-500 h-4 w-6"></div>
+                <div class="bg-blue-500 h-8 w-6"></div>
+                <div class="bg-green-500 h-12 w-6"></div> 
+             </div> -->
+
+            <header class="text-gray-700 text-xl  ">
                 <h2>Recipes</h2>
                 <h3>For Ninjas</h3>
             </header>
@@ -60,7 +66,7 @@
                 <div class="mt-8">
                     <!--cards go here   -->
                 </div>
-                <div>
+                <div class="flex justify-center">
                     <div>Load more</div>
                 </div>
             </div>

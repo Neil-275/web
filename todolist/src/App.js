@@ -1,27 +1,28 @@
 import './App.css';
 import React from 'react';
 
-function List(props){
+function List(props) {
   return (
     <div>
       <ul>
-      {
-        props.list.map((things)=>(
-          <li key={things.id}
-          >{things.task}</li>
-        ))
-      }
+        {
+          props.list.map((things) => (
+            <li key={things.id}>
+              {things.task}
+            </li>
+          ))
+        }
       </ul>
     </div>
   )
 }
 
-function AddList(props){
+function AddList(props) {
   return (
     <div>
-      <input  onChange={props.handleChange}
-              value={props.new}
-              placeholder="Add new task"
+      <input onChange={props.handleChange}
+        value={props.new}
+        placeholder="Add new task"
       ></input>
       <button onClick={props.addTask}>
         Add
@@ -30,54 +31,56 @@ function AddList(props){
   )
 }
 
-class App extends React.Component{
-  constructor(props){
+class App extends React.Component {
+  constructor(props) {
     super(props);
-    this.state={
-      list:[{task:"Do homework",id:0}],
-      neww:"",
-      cnt:0,
+    this.state = {
+      list: [{ task: "Do homework", id: 0 }],
+      newtask
+        : "",
+      cnt: 0,
     }
-    this.handleChange=this.handleChange.bind(this)
-    this.addTask=this.addTask.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.addTask = this.addTask.bind(this)
   }
-  addTask(){
-    if (this.state.neww!==""){
-      this.setState((curr)=>{
-        return{
+  addTask() {
+    if (this.state.newtask !== "") {
+      this.setState((curr) => {
+        return {
           list: curr.list.concat([
             {
-              task: this.state.neww,
-              id: curr.cnt+1,
+              task: this.state.newtask,
+              id: curr.cnt + 1,
             },
-          
+
           ]),
-          neww:"",
-          cnt: curr.cnt+1,
+          newtask: "",
+          cnt: curr.cnt + 1,
         }
-          
+
       })
     }
   }
-  handleChange(e){
-    let tmp=e.target.value
+  handleChange(e) {
+    let tmp = e.target.value
     this.setState({
-      neww:tmp,
+      newtask: tmp,
     })
   }
-  render(){
+  render() {
     return (
       <div>
-          <List
+        <List
           list={this.state.list}
-          />
-          <AddList
+        />
+        <AddList
           handleChange={this.handleChange}
-          new={this.state.neww}
-          addTask={this.addTask}/>
+          new={this.state.newtask
+          }
+          addTask={this.addTask} />
       </div>
     )
-    
+
   }
 }
 

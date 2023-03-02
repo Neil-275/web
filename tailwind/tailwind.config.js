@@ -2,7 +2,13 @@
 module.exports = {
   content: [ './public/**/*.{html,js}',],
   theme: {
-    extend: {},
+    fontSize: {
+      mammoth:'8rem',
+    },
+    fontFamily:{
+      body:['Nunito'],
+    },
+    extend: { },
   },
   plugins: [],
 }
