@@ -1,7 +1,12 @@
 .App {
   text-align: center;
 }
-
+table,td,th{
+  border: 1px solid black ;
+}
+table{
+  width:100%
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
